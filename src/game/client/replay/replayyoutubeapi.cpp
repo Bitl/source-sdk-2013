@@ -488,6 +488,7 @@ public:
 			AssertMsg(0, "Unknown game");
 			*ppShortGameName = "";
 			*ppFullGameName = "";
+#endif
 		}
 	}
 
