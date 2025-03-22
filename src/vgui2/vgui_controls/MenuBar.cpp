@@ -226,7 +226,7 @@ void MenuBar::OnCursorEnteredMenuButton(vgui::Panel* VPanel)
 {
 	VPANEL menuButton = (VPANEL)VPanel;
 #else
-void Menu::OnCursorEnteredMenuItem(int VPanel)
+void MenuBar::OnCursorEnteredMenuButton(int VPanel)
 {
 	VPANEL menuButton = (VPANEL)VPanel;
 #endif
