@@ -277,6 +277,8 @@ extern ConVar sv_vote_allow_spectators;
 ConVar sv_vote_late_join_time( "sv_vote_late_join_time", "90", FCVAR_NONE, "Grace period after the match starts before players who join the match receive a vote-creation cooldown" );
 ConVar sv_vote_late_join_cooldown( "sv_vote_late_join_cooldown", "300", FCVAR_NONE, "Length of the vote-creation cooldown when joining the server after the grace period has expired" );
 
+ConVar tf_allow_contracker_taunt("tf_allow_contracker_taunt", "1", FCVAR_REPLICATED | FCVAR_NOTIFY, "Enable the ConTracker viewing animation.");
+
 extern ConVar tf_feign_death_duration;
 extern ConVar spec_freeze_time;
 extern ConVar spec_freeze_traveltime;
@@ -8037,17 +8039,21 @@ bool CTFPlayer::ClientCommand( const CCommand &args )
 	}
 	else if ( FStrEq( "cyoa_pda_open", pcmd ) )
 	{
-		bool bOpen = atoi( args[1] ) != 0;
+        if ( tf_allow_contracker_taunt.GetBool() )
+        {
+            bool bOpen = atoi( args[1] ) != 0;
 
-		if ( bOpen && IsTaunting() )
-		{
-			ClientPrint( this, HUD_PRINTCENTER, "#TF_CYOA_PDA_Taunting" );
-		}
-		else
-		{
-			m_bViewingCYOAPDA.Set( bOpen );
-			TeamFortress_SetSpeed();
-		}
+            if ( bOpen && IsTaunting() )
+            {
+                ClientPrint( this, HUD_PRINTCENTER, "#TF_CYOA_PDA_Taunting" );
+            }
+            else
+            {
+                m_bViewingCYOAPDA.Set( bOpen );
+                TeamFortress_SetSpeed();
+            }
+        }
+        
 		return true;
 	}
 
