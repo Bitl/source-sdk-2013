@@ -8039,20 +8039,20 @@ bool CTFPlayer::ClientCommand( const CCommand &args )
 	}
 	else if ( FStrEq( "cyoa_pda_open", pcmd ) )
 	{
-        if ( tf_allow_contracker_taunt.GetBool() )
-        {
-            bool bOpen = atoi( args[1] ) != 0;
+		if ( tf_allow_contracker_taunt.GetBool() )
+		{
+			bool bOpen = atoi( args[1] ) != 0;
 
-            if ( bOpen && IsTaunting() )
-            {
-                ClientPrint( this, HUD_PRINTCENTER, "#TF_CYOA_PDA_Taunting" );
-            }
-            else
-            {
-                m_bViewingCYOAPDA.Set( bOpen );
-                TeamFortress_SetSpeed();
-            }
-        }
+			if ( bOpen && IsTaunting() )
+			{
+				ClientPrint( this, HUD_PRINTCENTER, "#TF_CYOA_PDA_Taunting" );
+			}
+			else
+			{
+				m_bViewingCYOAPDA.Set( bOpen );
+				TeamFortress_SetSpeed();
+			}
+		}
         
 		return true;
 	}
