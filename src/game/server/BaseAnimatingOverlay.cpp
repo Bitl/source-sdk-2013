@@ -306,7 +306,7 @@ void CBaseAnimatingOverlay::StudioFrameAdvance ()
 			}
 
 			pLayer->StudioFrameAdvance( flAdvance, this );
-			if ( pLayer->m_bSequenceFinished && (pLayer->IsAutokill()) )
+			if ( pLayer->m_bSequenceFinished && (pLayer->IsAutokill()) && ( !pLayer->m_bLooping ) )
 			{
 				pLayer->m_flWeight = 0.0f;
 				pLayer->KillMe();
