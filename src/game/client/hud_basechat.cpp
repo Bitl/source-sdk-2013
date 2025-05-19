@@ -1448,7 +1448,8 @@ void CBaseHudChatLine::InsertAndColorizeText( wchar_t *buf, int clientIndex )
 			case COLOR_HEXCODE_ALPHA:
 				{
 					bool bReadAlpha = ( *txt == COLOR_HEXCODE_ALPHA );
-					const int nCodeBytes = ( bReadAlpha ? 8 : 6 );
+					const int nNonAlphaBiteSize = ( ( wcslen(txt) == 3 ) ? 3 : 6 );
+					const int nCodeBytes = ( bReadAlpha ? 8 : nNonAlphaBiteSize );
 					range.start = nBytesIn + nCodeBytes + 1;
 					range.end = lineLen;
 					range.preserveAlpha = bReadAlpha;
@@ -1456,14 +1457,28 @@ void CBaseHudChatLine::InsertAndColorizeText( wchar_t *buf, int clientIndex )
 
 					if ( range.end > range.start )
 					{
-						int r = V_nibble( txt[0] ) << 4 | V_nibble( txt[1] );
-						int g = V_nibble( txt[2] ) << 4 | V_nibble( txt[3] );
-						int b = V_nibble( txt[4] ) << 4 | V_nibble( txt[5] );
+						int r = 0;
+						int g = 0;
+						int b = 0;
 						int a = 255;
 
-						if ( bReadAlpha )
+						if ( wcslen(txt) == 3 )
 						{
-							a = V_nibble( txt[6] ) << 4 | V_nibble( txt[7] );
+							r = V_nibble( txt[0] ) << 4;
+							g = V_nibble( txt[1] ) << 4;
+							b = V_nibble( txt[2] ) << 4;
+						}
+						else
+						{
+							r = V_nibble( txt[0] ) << 4 | V_nibble( txt[1] );
+							g = V_nibble( txt[2] ) << 4 | V_nibble( txt[3] );
+							b = V_nibble( txt[4] ) << 4 | V_nibble( txt[5] );
+							a = 255;
+
+							if (bReadAlpha)
+							{
+								a = V_nibble( txt[6] ) << 4 | V_nibble( txt[7] );
+							}
 						}
 
 						range.color = Color( r, g, b, a );
